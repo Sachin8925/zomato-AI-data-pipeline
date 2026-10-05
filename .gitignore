@@ -1,0 +1,34 @@
+# ---- secrets (never push) ----
+.env
+*.env
+!.env.example
+airflow/.env
+AI/.env
+
+# ---- dbt ----
+zomato/target/
+zomato/dbt_packages/
+zomato/logs/
+logs/
+
+# ---- Airflow ----
+airflow/logs/
+
+# ---- Python ----
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ---- data and large artifacts ----
+Data/
+*.csv
+!sample_data/*.csv
+*.parquet
+
+# ---- editor / OS ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.user.yml

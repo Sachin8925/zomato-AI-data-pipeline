@@ -1,0 +1,80 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "S3 se COPY INTO ke zariye load hua raw Zomato data"
+    database: ZOMATO
+    schema: RAW
+
+    tables:
+      - name: restaurants
+        description: "Restaurant master data"
+        columns:
+          - name: id
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+
+      - name: users
+        description: "Customer master data"
+        columns:
+          - name: user_id
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+
+      - name: food
+        description: "Food item master"
+        columns:
+          - name: f_id
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+
+      - name: menu
+        description: "Restaurant-wise menu with prices"
+        columns:
+          - name: menu_id
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+
+      - name: orders
+        description: "Order header data"
+        columns:
+          - name: order_id
+            tests:
+              - unique
+              - not_null
+
+      - name: order_items
+        description: "Order line items"
+        columns:
+          - name: order_item_id
+            tests:
+              - unique
+              - not_null
+          - name: order_id
+            tests:
+              - not_null
+
+      - name: reviews
+        description: "Customer review text, AI layer ka input"
+        columns:
+          - name: review_id
+            tests:
+              - unique
+              - not_null
+
+  - name: ai
+    description: "LLM se enrich hui tables (OpenAI jobs)"
+    database: ZOMATO
+    schema: AI
+
+    tables:
+      - name: review_enriched
+        description: "Reviews ka LLM summary/sentiment output"
